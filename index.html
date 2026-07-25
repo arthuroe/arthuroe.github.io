@@ -887,10 +887,12 @@
     </section>
 
     <!-- PROJECTS -->
+    <!-- PROJECTS -->
     <section id="projects">
       <p class="section-tag">// Pet projects</p>
       <h2>Things I've built<br /><em>for fun</em></h2>
       <div class="projects-grid">
+        <!-- Fantasy Rugby card (unchanged from your existing site) -->
         <div class="project-card fade-in">
           <div class="project-top">
             <div class="project-icon">
@@ -946,18 +948,303 @@
             I built the backend REST API for Fantasy Rugby, a platform enabling
             users to assemble virtual teams from real players and compete based
             on match performance. This extends the fantasy sports model to a
-            sport largely underserved by existing platforms. It was developed to
-            give rugby fans a dedicated, competitive way to engage with the
-            sport, addressing a gap left by applications that focus exclusively
-            on football, basketball, and soccer.
+            sport largely underserved by existing platforms.
           </p>
           <div class="exp-tag-row">
             <span class="chip">Python</span><span class="chip">Flask</span
             ><span class="chip">PostgreSQL</span>
           </div>
         </div>
+
+        <!-- Portfolio Assistant card (new — inline RAG chatbot) -->
+        <div class="project-card fade-in ppa-card">
+          <div class="project-top">
+            <div class="project-icon">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path
+                  d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                />
+              </svg>
+            </div>
+            <div class="project-links">
+              <a
+                href="https://github.com/arthuroe/portfolio-agent"
+                class="project-link"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                  />
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+
+          <h3 class="project-title">Portfolio Assistant</h3>
+          <p class="project-desc">
+            A RAG chatbot grounded in my actual CV — ask it anything about my
+            experience, and it answers from real content instead of guessing.
+            Try it below.
+          </p>
+
+          <div class="ppa-chat">
+            <div id="ppa-messages" class="ppa-messages">
+              <div class="ppa-msg ppa-bot">
+                <div class="ppa-bubble">
+                  Ask me something about Arthur's experience.
+                </div>
+              </div>
+            </div>
+            <form id="ppa-form" class="ppa-form">
+              <input
+                id="ppa-input"
+                type="text"
+                placeholder="e.g. Tell me about the LevelTen role"
+                autocomplete="off"
+              />
+              <button type="submit" aria-label="Send">→</button>
+            </form>
+          </div>
+
+          <div class="exp-tag-row">
+            <span class="chip">RAG</span><span class="chip">pgvector</span
+            ><span class="chip">FastAPI</span><span class="chip">Groq</span>
+          </div>
+        </div>
       </div>
     </section>
+
+    <style>
+      .ppa-card {
+        flex-basis: 340px;
+      }
+
+      .ppa-chat {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--paper-warm);
+        border-radius: 6px;
+        background: var(--paper);
+        overflow: hidden;
+      }
+
+      .ppa-messages {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+        max-height: 180px;
+        overflow-y: auto;
+      }
+      .ppa-messages::-webkit-scrollbar {
+        width: 5px;
+      }
+      .ppa-messages::-webkit-scrollbar-thumb {
+        background: var(--ink-faint);
+        border-radius: 3px;
+      }
+
+      .ppa-msg {
+        display: flex;
+        font-family: var(--sans);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .ppa-msg.ppa-user {
+        justify-content: flex-end;
+      }
+      .ppa-msg.ppa-bot {
+        justify-content: flex-start;
+      }
+
+      .ppa-bubble {
+        max-width: 85%;
+        padding: 7px 11px;
+        border-radius: 12px;
+      }
+      .ppa-user .ppa-bubble {
+        background: var(--accent);
+        color: #fff;
+        border-bottom-right-radius: 3px;
+      }
+      .ppa-bot .ppa-bubble {
+        background: #fff;
+        color: var(--ink);
+        border: 1px solid var(--paper-warm);
+        border-bottom-left-radius: 3px;
+      }
+      .ppa-bot .ppa-bubble.ppa-throttled {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--ink-muted);
+      }
+
+      .ppa-dots {
+        display: inline-flex;
+        gap: 3px;
+        padding: 2px 0;
+      }
+      .ppa-dots span {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--accent-mid);
+        animation: ppa-bounce 1.2s infinite ease-in-out;
+      }
+      .ppa-dots span:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      .ppa-dots span:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      @keyframes ppa-bounce {
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.5;
+        }
+        30% {
+          transform: translateY(-3px);
+          opacity: 1;
+        }
+      }
+
+      .ppa-form {
+        display: flex;
+        gap: 6px;
+        padding: 8px;
+        border-top: 1px solid var(--paper-warm);
+        background: #fff;
+      }
+      .ppa-form input {
+        flex: 1;
+        border: 1px solid var(--paper-warm);
+        border-radius: 999px;
+        padding: 7px 12px;
+        font-family: var(--sans);
+        font-size: 12.5px;
+        outline: none;
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .ppa-form input:focus {
+        border-color: var(--accent-mid);
+      }
+      .ppa-form input:disabled {
+        opacity: 0.6;
+      }
+
+      .ppa-form button {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        border: none;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.15s ease;
+      }
+      .ppa-form button:hover:not(:disabled) {
+        background: #234830;
+      }
+      .ppa-form button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    </style>
+
+    <script>
+      const PPA_API_URL = "https://portfolio-agent-mq1r.onrender.com/ask";
+
+      const ppaMessages = document.getElementById("ppa-messages");
+      const ppaForm = document.getElementById("ppa-form");
+      const ppaInput = document.getElementById("ppa-input");
+      const ppaButton = ppaForm.querySelector("button");
+
+      function ppaAddMessage(text, sender, opts = {}) {
+        const row = document.createElement("div");
+        row.className = `ppa-msg ppa-${sender}`;
+        const bubble = document.createElement("div");
+        bubble.className =
+          "ppa-bubble" + (opts.throttled ? " ppa-throttled" : "");
+        bubble.textContent = text;
+        row.appendChild(bubble);
+        ppaMessages.appendChild(row);
+        ppaMessages.scrollTop = ppaMessages.scrollHeight;
+      }
+
+      function ppaAddTyping() {
+        const row = document.createElement("div");
+        row.className = "ppa-msg ppa-bot";
+        row.id = "ppa-typing";
+        row.innerHTML = `<div class="ppa-bubble"><span class="ppa-dots"><span></span><span></span><span></span></span></div>`;
+        ppaMessages.appendChild(row);
+        ppaMessages.scrollTop = ppaMessages.scrollHeight;
+      }
+
+      let ppaInFlight = false;
+
+      ppaForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (ppaInFlight) return;
+
+        const question = ppaInput.value.trim();
+        if (!question) return;
+
+        ppaInFlight = true;
+        ppaInput.disabled = true;
+        ppaButton.disabled = true;
+
+        ppaAddMessage(question, "user");
+        ppaInput.value = "";
+        ppaAddTyping();
+
+        try {
+          const res = await fetch(PPA_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question }),
+          });
+          const data = await res.json();
+          document.getElementById("ppa-typing")?.remove();
+
+          if (res.status === 429) {
+            ppaAddMessage(
+              data.detail || "Please wait a moment before asking again.",
+              "bot",
+              { throttled: true },
+            );
+          } else {
+            ppaAddMessage(data.answer || "Sorry, something went wrong.", "bot");
+          }
+        } catch (err) {
+          document.getElementById("ppa-typing")?.remove();
+          ppaAddMessage("Sorry, I couldn't reach the server.", "bot");
+        } finally {
+          ppaInFlight = false;
+          ppaInput.disabled = false;
+          ppaButton.disabled = false;
+        }
+      });
+    </script>
 
     <!-- SKILLS -->
     <section
@@ -1046,412 +1333,6 @@
       >
     </footer>
 
-    <!--
-  Portfolio chat widget — styled to match a DM Serif Display / DM Sans / DM Mono
-  system with an earthy green accent palette.
-  Copy this block into your GitHub Pages HTML (e.g. right before </body>).
-  Update API_URL to wherever you deploy app.py (Render, Fly.io, etc).
-  If your page doesn't already load the DM font family, keep the <link> tag below;
-  if it does, you can safely delete it to avoid loading fonts twice.
--->
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&family=DM+Serif+Display&display=swap"
-      rel="stylesheet"
-    />
-
-    <div id="portfolio-chat">
-      <button id="chat-toggle" aria-label="Ask about Arthur">
-        <span class="toggle-label">Ask about Arthur</span>
-        <span class="toggle-icon">＋</span>
-      </button>
-
-      <div
-        id="chat-box"
-        role="dialog"
-        aria-label="Chat with Arthur's portfolio assistant"
-      >
-        <div id="chat-header">
-          <div>
-            <div id="chat-title">Ask about Arthur</div>
-            <div id="chat-subtitle">Grounded in his actual CV — ask away</div>
-          </div>
-          <button id="chat-close" aria-label="Close chat">✕</button>
-        </div>
-
-        <div id="chat-messages">
-          <div class="msg bot">
-            <div class="bubble">
-              Hi — I can answer questions about Arthur's experience, projects,
-              and skills. What would you like to know?
-            </div>
-          </div>
-        </div>
-
-        <form id="chat-form">
-          <input
-            id="chat-input"
-            type="text"
-            placeholder="e.g. What backend work has Arthur done?"
-            autocomplete="off"
-          />
-          <button type="submit" aria-label="Send">→</button>
-        </form>
-      </div>
-    </div>
-
-    <style>
-      #portfolio-chat {
-        --pa-cream: #f7f5ef;
-        --pa-white: #fffefb;
-        --pa-ink: #2b2b24;
-        --pa-ink-muted: #6f6c5f;
-        --pa-green: #3f5d4a;
-        --pa-green-dark: #324a3b;
-        --pa-sage: #b9c9b6;
-        --pa-border: #e2ddcd;
-
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        z-index: 1000;
-        font-family: "DM Sans", system-ui, sans-serif;
-        color: var(--pa-ink);
-      }
-
-      #chat-toggle {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: var(--pa-green);
-        color: var(--pa-white);
-        border: none;
-        padding: 12px 18px;
-        border-radius: 999px;
-        cursor: pointer;
-        font-family: "DM Sans", sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        letter-spacing: 0.01em;
-        box-shadow: 0 6px 20px rgba(63, 93, 74, 0.25);
-        transition:
-          background 0.15s ease,
-          transform 0.15s ease;
-      }
-      #chat-toggle:hover {
-        background: var(--pa-green-dark);
-        transform: translateY(-1px);
-      }
-      #chat-toggle:focus-visible {
-        outline: 2px solid var(--pa-sage);
-        outline-offset: 2px;
-      }
-      .toggle-icon {
-        font-size: 16px;
-        line-height: 1;
-        transition: transform 0.2s ease;
-      }
-      #portfolio-chat.open .toggle-icon {
-        transform: rotate(45deg);
-      }
-      #portfolio-chat.open .toggle-label {
-        display: none;
-      }
-      #portfolio-chat.open #chat-toggle {
-        padding: 12px;
-        border-radius: 50%;
-      }
-
-      #chat-box {
-        display: none;
-        flex-direction: column;
-        width: 340px;
-        max-height: 480px;
-        background: var(--pa-cream);
-        border: 1px solid var(--pa-border);
-        border-radius: 16px;
-        box-shadow: 0 12px 40px rgba(43, 43, 36, 0.16);
-        margin-top: 12px;
-        overflow: hidden;
-      }
-      #portfolio-chat.open #chat-box {
-        display: flex;
-      }
-
-      #chat-header {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        padding: 16px 18px;
-        background: var(--pa-white);
-        border-bottom: 1px solid var(--pa-border);
-      }
-      #chat-title {
-        font-family: "DM Serif Display", serif;
-        font-size: 19px;
-        color: var(--pa-green-dark);
-        line-height: 1.2;
-      }
-      #chat-subtitle {
-        font-family: "DM Mono", monospace;
-        font-size: 11px;
-        color: var(--pa-ink-muted);
-        margin-top: 4px;
-        letter-spacing: 0.01em;
-      }
-      #chat-close {
-        background: none;
-        border: none;
-        color: var(--pa-ink-muted);
-        font-size: 14px;
-        cursor: pointer;
-        padding: 2px 4px;
-        line-height: 1;
-      }
-      #chat-close:hover {
-        color: var(--pa-ink);
-      }
-
-      #chat-messages {
-        padding: 16px 18px;
-        overflow-y: auto;
-        flex: 1;
-        max-height: 320px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      #chat-messages::-webkit-scrollbar {
-        width: 6px;
-      }
-      #chat-messages::-webkit-scrollbar-thumb {
-        background: var(--pa-sage);
-        border-radius: 3px;
-      }
-
-      .msg {
-        display: flex;
-        font-size: 13.5px;
-        line-height: 1.5;
-      }
-      .msg.user {
-        justify-content: flex-end;
-      }
-      .msg.bot {
-        justify-content: flex-start;
-      }
-
-      .bubble {
-        max-width: 84%;
-        padding: 9px 13px;
-        border-radius: 14px;
-      }
-      .msg.user .bubble {
-        background: var(--pa-green);
-        color: var(--pa-white);
-        border-bottom-right-radius: 4px;
-      }
-      .msg.bot .bubble {
-        background: var(--pa-white);
-        color: var(--pa-ink);
-        border: 1px solid var(--pa-border);
-        border-bottom-left-radius: 4px;
-      }
-      .msg.bot .bubble.throttled {
-        font-family: "DM Mono", monospace;
-        font-size: 12px;
-        color: var(--pa-ink-muted);
-        font-style: normal;
-      }
-
-      .typing-dots {
-        display: inline-flex;
-        gap: 3px;
-        padding: 2px 0;
-      }
-      .typing-dots span {
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background: var(--pa-sage);
-        animation: pa-bounce 1.2s infinite ease-in-out;
-      }
-      .typing-dots span:nth-child(2) {
-        animation-delay: 0.15s;
-      }
-      .typing-dots span:nth-child(3) {
-        animation-delay: 0.3s;
-      }
-      @keyframes pa-bounce {
-        0%,
-        60%,
-        100% {
-          transform: translateY(0);
-          opacity: 0.5;
-        }
-        30% {
-          transform: translateY(-4px);
-          opacity: 1;
-        }
-      }
-
-      #chat-form {
-        display: flex;
-        gap: 8px;
-        padding: 12px;
-        background: var(--pa-white);
-        border-top: 1px solid var(--pa-border);
-      }
-      #chat-input {
-        flex: 1;
-        border: 1px solid var(--pa-border);
-        border-radius: 999px;
-        padding: 9px 14px;
-        font-family: "DM Sans", sans-serif;
-        font-size: 13.5px;
-        outline: none;
-        background: var(--pa-cream);
-        color: var(--pa-ink);
-        transition: border-color 0.15s ease;
-      }
-      #chat-input:focus {
-        border-color: var(--pa-green);
-      }
-      #chat-input:disabled {
-        opacity: 0.6;
-      }
-      #chat-input::placeholder {
-        color: var(--pa-ink-muted);
-      }
-
-      #chat-form button {
-        width: 36px;
-        height: 36px;
-        flex-shrink: 0;
-        border: none;
-        border-radius: 50%;
-        background: var(--pa-green);
-        color: var(--pa-white);
-        font-size: 15px;
-        cursor: pointer;
-        transition:
-          background 0.15s ease,
-          transform 0.1s ease;
-      }
-      #chat-form button:hover:not(:disabled) {
-        background: var(--pa-green-dark);
-      }
-      #chat-form button:active:not(:disabled) {
-        transform: scale(0.94);
-      }
-      #chat-form button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-
-      @media (max-width: 420px) {
-        #portfolio-chat {
-          right: 12px;
-          bottom: 12px;
-        }
-        #chat-box {
-          width: calc(100vw - 24px);
-        }
-      }
-    </style>
-
-    <script>
-      const API_URL = "https://portfolio-agent-mq1r.onrender.com/ask";
-
-      const root = document.getElementById("portfolio-chat");
-      const toggle = document.getElementById("chat-toggle");
-      const closeBtn = document.getElementById("chat-close");
-      const messages = document.getElementById("chat-messages");
-      const form = document.getElementById("chat-form");
-      const input = document.getElementById("chat-input");
-      const sendButton = form.querySelector("button");
-
-      function openChat() {
-        root.classList.add("open");
-        input.focus();
-      }
-      function closeChat() {
-        root.classList.remove("open");
-      }
-      toggle.addEventListener("click", () => {
-        root.classList.contains("open") ? closeChat() : openChat();
-      });
-      closeBtn.addEventListener("click", closeChat);
-
-      function addMessage(text, sender, opts = {}) {
-        const row = document.createElement("div");
-        row.className = `msg ${sender}`;
-        const bubble = document.createElement("div");
-        bubble.className = "bubble" + (opts.throttled ? " throttled" : "");
-        bubble.textContent = text;
-        row.appendChild(bubble);
-        messages.appendChild(row);
-        messages.scrollTop = messages.scrollHeight;
-        return row;
-      }
-
-      function addTypingIndicator() {
-        const row = document.createElement("div");
-        row.className = "msg bot";
-        row.id = "typing-indicator";
-        row.innerHTML = `<div class="bubble"><span class="typing-dots"><span></span><span></span><span></span></span></div>`;
-        messages.appendChild(row);
-        messages.scrollTop = messages.scrollHeight;
-      }
-
-      let requestInFlight = false;
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        if (requestInFlight) return; // ignore rapid double-submits
-
-        const question = input.value.trim();
-        if (!question) return;
-
-        requestInFlight = true;
-        input.disabled = true;
-        sendButton.disabled = true;
-
-        addMessage(question, "user");
-        input.value = "";
-        addTypingIndicator();
-
-        try {
-          const res = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ question }),
-          });
-          const data = await res.json();
-          document.getElementById("typing-indicator")?.remove();
-
-          if (res.status === 429) {
-            addMessage(
-              data.detail || "Please wait a moment before asking again.",
-              "bot",
-              { throttled: true },
-            );
-          } else {
-            addMessage(data.answer || "Sorry, something went wrong.", "bot");
-          }
-        } catch (err) {
-          document.getElementById("typing-indicator")?.remove();
-          addMessage("Sorry, I couldn't reach the server.", "bot");
-        } finally {
-          requestInFlight = false;
-          input.disabled = false;
-          sendButton.disabled = false;
-          input.focus();
-        }
-      });
-    </script>
     <script>
       // Scroll-triggered fade-in for elements with class="fade-in"
       const fadeEls = document.querySelectorAll(".fade-in");
